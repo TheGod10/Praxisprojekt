@@ -1,9 +1,13 @@
 import java.sql.Time;
 import java.util.Date;
-import java.util.IdentityHashMap;
+
 
 /**
  * Created by TheGod on 31.10.16.
+ */
+
+/**
+ * Holds data from a specific variable of a file
  */
 public class Surgery {
     private Date opDate;
