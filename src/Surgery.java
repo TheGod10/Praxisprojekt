@@ -26,7 +26,7 @@ public class Surgery {
     private Integer taCode;
     private Integer knotenID;
     private Integer taStatistic;
-    private String knotenIdentifier;
+    private Integer knotenIdentifier;
     private String taIdnetifier;
     private String operatuer;
     private String assistance;
@@ -37,7 +37,7 @@ public class Surgery {
     private String patientFirstName;
     private String patientLastName;
     private Date birthDate;
-    private char gender;
+    private Character gender;
     private Integer age;
     private String room;
     private Integer pID;
@@ -79,12 +79,11 @@ public class Surgery {
     private String terminArtID;
     private String terminArtCode;
     private String terminID;
-    private String comment4;
 
 
 
 
-    public Surgery parseLiestal (String[] elements, Date[] dateElements, Time[] timeElements, Integer[] numberElements) {
+    public Surgery parseLiestal (String[] elements, Date[] dateElements, Time[] timeElements, Integer[] numberElements, Character[] charElements) {
 
         Surgery s = new Surgery();
         s.opDate = dateElements[1];
@@ -92,70 +91,58 @@ public class Surgery {
         s.start = timeElements[4];
         s.end = timeElements[5];
         s.opDuaration = numberElements[6];
-        
+        s.meetingIdentifier = elements[7];
+        s.comment1 = elements[8];
+        s.comment2 = elements[9];
+        s.comment3 = elements[10];
+        s.meetingNotice = elements[11];
+        s.tattCode = charElements[12];
+        s.taCode = numberElements[13];
+        s.taStatistic = numberElements[14];
+        s.taIdnetifier = elements[15];
+        s.operatuer = elements[16];
+        s.assistance = elements[17];
+        s.anaesthesia = elements[18];
+        s.anaesthesiaCare = elements[19];
+        s.instrumentation = elements[20];
+        s.zudienung = elements[21];
+        s.patientFirstName = elements[22];
+        s.patientLastName = elements[23];
+        s.birthDate = dateElements[24];
+        s.gender = charElements[25];
+        s.age = numberElements[26];
+        s.room = elements[27];
+        s.pID = numberElements[28];
+        s.fID = numberElements[29];
+        s.stay = elements[30];
+        s.discipline = elements[31];
+        s.oe = elements[32];
+        s.Klasse = elements[33];
+        s.categorie = elements[34];
+        s.entrance = dateElements[35];
+        s.entranceTime = timeElements[36];
+        s.leaving = dateElements[37];
+        s.leavingTime = timeElements[38];
+        s.p1PatientRequest = timeElements[39];
+        s.p3StartWrangle = timeElements[40];
+        s.p5PatientInOp = timeElements[41];
+        s.o5StartClean = timeElements[42];
+        s.o6StartPraesenzFirstOperateur = timeElements[43];
+        s.o8StartOp = timeElements[44];
+        s.o10EndOp = timeElements[45];
+        s.o11End = timeElements[46];
+        s.p7PatientOutOfOp = timeElements[47];
+        s.notFallSpezifikation = elements[50];
+        s.terminAbweichungVorbereitung = dateElements[51];
+        s.terminAbweichungWiederaufbereitung = dateElements[52];
+        s.terminArtID = elements[53];
+        s.terminArtCode = elements[54];
+        s.terminID = elements[55];
 
-
-    }
-
-
-
-    public Surgery parseBruderholz (String[] elements, Date[] dateElements, Time[]  timeElements, Integer[] numberElements, Character charelements[]){
-
-        Surgery s=new Surgery();
-        s.opDate=dateElements[1];
-        s.opRoom=elements[3];
-        s.start=timeElements[4];
-        s.end=timeElements[5];
-        s.opDuaration=numberElements[6];
-        s.meetingIdentifier=elements[7];
-        s.comment1=elements[8];
-        s.comment2=elements[9];
-        s.comment3=elements[10];
-        s.meetingNotice=elements[11];
-        s.tattCode=charelements[12];
-        s.taSequence=numberElements[13];
-        s.taCode=numberElements[14];
-        s.knotenID=numberElements[15];
-        s.taStatistic=numberElements[16];
-        s.knotenIdentifier=elements[17];
-        s.taIdnetifier=elements[18];
-        s.operatuer=elements[20];
-        s.assistance=elements[21];
-        s.anaesthesiaCare=elements[22];
-        s.instrumentation=elements[23];
-        s.zudienung=elements[24];
-        s.patientLastName=elements[25];
-        s.patientFirstName=elements[26];
-        s.birthDate=dateElements[27];
-        s.gender=charelements[28];
-        s.age=numberElements[29];
-        s.room=elements[30];
-        s.pID=numberElements[31];
-        s.fID=numberElements[32];
-        s.stay=elements[33];
-        s.discipline=elements[34];
-        s.oe=elements[35];
-        s.Klasse=elements[36];
-        s.categorie=elements[37];
-        s.entrance=dateElements[38];
-        s.entranceTime=timeElements[39];
-        s.leaving=dateElements[40];
-        s.leavingTime=timeElements[41];
-        s.p1PatientRequest=timeElements[42];
-        s.p3StartWrangle=timeElements[43];
-        s.o1StartPreparingOpFunction=timeElements[44];
-        s.o6StartPraesenzFirstOperateur=timeElements[45];
-        s.o5StartClean=timeElements[46];
-        s.o6StartPraesenzFirstOperateur=timeElements[47];
-        s.o8StartOp=timeElements[48];
-        s.o10EndOp=timeElements[49];
-        s.o11End=timeElements[50];
-        s.p7PatientOutOfOp=timeElements[51];
-        s.comment4=elements[54];
 
         return s;
-    }
 
+    }
 
 
 }
