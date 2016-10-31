@@ -83,10 +83,15 @@ public class Surgery {
 
 
 
-    public Surgery(String[] elements, Date[] dateElements) {
+    public Surgery parseLiestal (String[] elements, Date[] dateElements, Time[] timeElements, Integer[] numberElements) {
 
         Surgery s = new Surgery();
         s.opDate = dateElements[1];
+        s.opRoom = elements[3];
+        s.start = timeElements[4];
+        s.end = timeElements[5];
+        s.opDuaration = numberElements[6];
+        
 
 
     }
