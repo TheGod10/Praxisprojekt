@@ -53,6 +53,9 @@ public class Surgery {
     private Time p5PatientInOp;
     private Time p6EnrolmentToCareUnit;
     private Time p7PatientOutOfOp;
+    private Time p8Umbetten;
+    private Time p9StartOpRoomClean;
+    private Time p10EndOpRoomClean;
 
 
 
