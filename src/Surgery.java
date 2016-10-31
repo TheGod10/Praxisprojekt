@@ -1,4 +1,5 @@
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -60,13 +61,35 @@ public class Surgery {
     private Time p8Umbetten;
     private Time p9StartOpRoomClean;
     private Time p10EndOpRoomClean;
-//hey hey
+    private Time o1StartPreparingOpFunction;
+    private Time o2EndPreparingOpFunction;
+    private Time o3StartStore;
+    private Time o4EndStore;
+    private Time o5StartClean;
+    private Time o6StartPraesenzFirstOperateur;
+    private Time o7EndClean;
+    private Time o8StartOp;
+    private Time o9EndPraesenzOperateur;
+    private Time o10EndOp;
+    private Time o11End;
+    private Time o12EndAfterOpWorkFunction;
+    private String notFallSpezifikation;
+    private Date terminAbweichungVorbereitung;
+    private Date terminAbweichungWiederaufbereitung;
+    private String terminArtID;
+    private String terminArtCode;
+    private String terminID;
 
 
 
 
+    public Surgery(String[] elements, Date[] dateElements) {
+
+        Surgery s = new Surgery();
+        s.opDate = dateElements[1];
 
 
+    }
 
 
 }
