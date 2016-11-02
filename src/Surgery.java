@@ -1,6 +1,9 @@
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Date;
+
+
+import java.io.*;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -11,21 +14,21 @@ import java.util.Date;
  * Holds data from a specific variable of a file
  */
 public class Surgery {
-    private Date opDate;
+    private String opDate;
     private String opRoom;
-    private Time start;
-    private Time end;
-    private Integer opDuaration;
+    private String start;
+    private String end;
+    private String opDuaration;
     private String meetingIdentifier;
     private String comment1;
     private String comment2;
     private String comment3;
     private String meetingNotice;
-    private Character tattCode;
-    private Integer taSequence;
-    private Integer taCode;
-    private Integer knotenID;
-    private Integer taStatistic;
+    private String tattCode;
+    private String taSequence;
+    private String taCode;
+    private String knotenID;
+    private String taStatistic;
     private String knotenIdentifier;
     private String taIdnetifier;
     private String operatuer;
@@ -36,171 +39,312 @@ public class Surgery {
     private String zudienung;
     private String patientFirstName;
     private String patientLastName;
-    private Date birthDate;
-    private Character gender;
-    private Integer age;
+    private String birthDate;
+    private String gender;
+    private String age;
     private String room;
-    private Integer pID;
-    private Integer fID;
+    private String pID;
+    private String fID;
     private String stay;
     private String discipline;
     private String oe;
-    private String Klasse;
+    private String klasse;
     private String categorie;
-    private Date entrance;
-    private Time entranceTime;
-    private Date leaving;
-    private Time leavingTime;
-    private Time p1PatientRequest;
-    private Time p2PatientArrive;
-    private Time p3StartWrangle;
-    private Time p4EndWrangle;
-    private Time p5PatientInOp;
-    private Time p6EnrolmentToCareUnit;
-    private Time p7PatientOutOfOp;
-    private Time p8Umbetten;
-    private Time p9StartOpRoomClean;
-    private Time p10EndOpRoomClean;
-    private Time o1StartPreparingOpFunction;
-    private Time o2EndPreparingOpFunction;
-    private Time o3StartStore;
-    private Time o4EndStore;
-    private Time o5StartClean;
-    private Time o6StartPraesenzFirstOperateur;
-    private Time o7EndClean;
-    private Time o8StartOp;
-    private Time o9EndPraesenzOperateur;
-    private Time o10EndOp;
-    private Time o11End;
-    private Time o12EndAfterOpWorkFunction;
+    private String entrance;
+    private String entranceTime;
+    private String leaving;
+    private String leavingTime;
+    private String p1PatientRequest;
+    private String p2PatientArrive;
+    private String p3StartWrangle;
+    private String p4EndWrangle;
+    private String p5PatientInOp;
+    private String p6EnrolmentToCareUnit;
+    private String p7PatientOutOfOp;
+    private String p8Umbetten;
+    private String p9StartOpRoomClean;
+    private String p10EndOpRoomClean;
+    private String o1StartPreparingOpFunction;
+    private String o2EndPreparingOpFunction;
+    private String o3StartStore;
+    private String o4EndStore;
+    private String o5StartClean;
+    private String o6StartPraesenzFirstOperateur;
+    private String o7EndClean;
+    private String o8StartOp;
+    private String o9EndPraesenzOperateur;
+    private String o10EndOp;
+    private String o11End;
+    private String o12EndAfterOpWorkFunction;
     private String notFallSpezifikation;
-    private Date terminAbweichungVorbereitung;
-    private Date terminAbweichungWiederaufbereitung;
+    private String terminAbweichung;
+    private String terminAbweichungVorbereitung;
+    private String terminAbweichungWiederaufbereitung;
     private String terminArtID;
     private String terminArtCode;
     private String terminID;
     private String comment4;
 
 
-
-
-    public Surgery parseLiestal (String[] elements, Date[] dateElements, Time[] timeElements, Integer[] numberElements, Character[] charElements) {
+    public static Surgery parseLiestal(String[] elements) {
 
         Surgery s = new Surgery();
-        s.opDate = dateElements[1];
-        s.opRoom = elements[3];
-        s.start = timeElements[4];
-        s.end = timeElements[5];
-        s.opDuaration = numberElements[6];
-        s.meetingIdentifier = elements[7];
-        s.comment1 = elements[8];
-        s.comment2 = elements[9];
-        s.comment3 = elements[10];
-        s.meetingNotice = elements[11];
-        s.tattCode = charElements[12];
-        s.taCode = numberElements[13];
-        s.taStatistic = numberElements[14];
-        s.taIdnetifier = elements[15];
-        s.operatuer = elements[16];
-        s.assistance = elements[17];
-        s.anaesthesia = elements[18];
-        s.anaesthesiaCare = elements[19];
-        s.instrumentation = elements[20];
-        s.zudienung = elements[21];
-        s.patientFirstName = elements[22];
-        s.patientLastName = elements[23];
-        s.birthDate = dateElements[24];
-        s.gender = charElements[25];
-        s.age = numberElements[26];
-        s.room = elements[27];
-        s.pID = numberElements[28];
-        s.fID = numberElements[29];
-        s.stay = elements[30];
-        s.discipline = elements[31];
-        s.oe = elements[32];
-        s.Klasse = elements[33];
-        s.categorie = elements[34];
-        s.entrance = dateElements[35];
-        s.entranceTime = timeElements[36];
-        s.leaving = dateElements[37];
-        s.leavingTime = timeElements[38];
-        s.p1PatientRequest = timeElements[39];
-        s.p3StartWrangle = timeElements[40];
-        s.p5PatientInOp = timeElements[41];
-        s.o5StartClean = timeElements[42];
-        s.o6StartPraesenzFirstOperateur = timeElements[43];
-        s.o8StartOp = timeElements[44];
-        s.o10EndOp = timeElements[45];
-        s.o11End = timeElements[46];
-        s.p7PatientOutOfOp = timeElements[47];
-        s.notFallSpezifikation = elements[50];
-        s.terminAbweichungVorbereitung = dateElements[51];
-        s.terminAbweichungWiederaufbereitung = dateElements[52];
-        s.terminArtID = elements[53];
-        s.terminArtCode = elements[54];
-        s.terminID = elements[55];
+        s.opDate = elements[0].replace("OpDat_pp", "opDate");
+        s.opRoom = elements[2].replace("OpSaal_pp", "opRoom");
+        s.start = elements[3].replace("BelegungBeginn", "star");
+        s.end = elements[4].replace("BelegungEnde", "end");
+        s.opDuaration = elements[5].replace("BelegungDauerMin", "opDuaration ");
+        s.meetingIdentifier = elements[6].replace("TerminBezeichnung", "meetingIdentifier ");
+        s.comment1 = elements[7].replace("TerminText1", "comment1 ");
+        s.comment2 = elements[8].replace("TerminText2", "comment2  ");
+        s.comment3 = elements[9].replace("TerminText3", "comment3  ");
+        s.meetingNotice = elements[10].replace("TerminBemerkungen", "meetingNotice ");
+        s.tattCode = elements[11].replace("TATTCode", "tattCode ");
+        s.taCode = elements[12].replace("TACode", "taCode ");
+        s.taStatistic = elements[13].replace("TAStatistik", "taStatistic");
+        s.taIdnetifier = elements[14].replace("TABezeichnung", "taIdnetifier ");
+        s.operatuer = elements[15].replace("Operateur", "operatuer  ");
+        s.assistance = elements[16].replace("Assistenz", "assistance");
+        s.anaesthesia = elements[17].replace("Anaesthesie", "anaesthesia ");
+        s.anaesthesiaCare = elements[18].replace("AnaePflege", "anaesthesiaCare  ");
+        s.instrumentation = elements[19].replace("Instrumentierung", "instrumentation  ");
+        s.zudienung = elements[20].replace("Zudienung", "zudienung ");
+        s.patientLastName = elements[21].replace("Name_pp", "patientLastName ");
+        s.patientFirstName = elements[22].replace("Vorname_pp", "patientFirstName ");
+        s.birthDate = elements[23].replace("GebDat_pp", "birthDate");
+        s.gender = elements[24].replace("Geschlecht_pp", "gender  ");
+        s.age = elements[25].replace("Alter_pp", "age  ");
+        s.room = elements[26].replace("Zimmer", "room ");
+        s.pID = elements[27].replace("PID", "pID ");
+        s.fID = elements[28].replace("PID", "fID ");
+        s.stay = elements[29].replace("Aufenthalt", "stay  ");
+        s.discipline = elements[30].replace("Disziplin_pp", "discipline ");
+        s.oe = elements[31].replace("OE", "oe");
+        s.klasse = elements[32].replace("Klasse", "klasse ");
+        s.categorie = elements[33].replace("Kategorie", "categorie ");
+        s.entrance = elements[34].replace("Eintritt", "entrance  ");
+        s.entranceTime = elements[35].replace("EintrittZeit", "entranceTime  ");
+        s.leaving = elements[36].replace("Austritt", "leaving  ");
+        s.leavingTime = elements[37].replace("AustrittZeit", "leavingTime  ");
+        s.p1PatientRequest = elements[38].replace("P1_PatAnf_pp", "p1PatientRequest ");
+        s.p3StartWrangle = elements[39].replace("P3_BegEin_pp", "p3StartWrangle");
+        s.p5PatientInOp = elements[40].replace("P5_ImSaal_pp", "p5PatientInOp ");
+        s.o5StartClean = elements[41].replace("O5_BegAbwasch_pp", "o5StartClean");
+        s.o6StartPraesenzFirstOperateur = elements[42].replace("O6_PräsOperateur_pp", "o6StartPraesenzFirstOperateur ");
+        s.o8StartOp = elements[43].replace("O8_Schnitt_pp", "o8StartOp ");
+        s.o10EndOp = elements[44].replace("O10_Naht_pp", "o10EndOp  ");
+        s.o11End = elements[45].replace("O11_EndNachbMassn_pp", "o11End  ");
+        s.p7PatientOutOfOp = elements[46].replace("P7_AusOp_pp", "p7PatientOutOfOp ");
+        s.notFallSpezifikation = elements[49].replace("Notfallklassifikation", "notFallSpezifikation ");
+        s.terminAbweichung = elements[50].replace("Termin_Abweichung", "terminAbweichung ");
+        s.terminAbweichungVorbereitung = elements[51].replace("Termin_Abweichung_Vorbereitung", "terminAbweichungVorbereitung ");
+        s.terminAbweichungWiederaufbereitung = elements[52].replace("Termin_Abweichung_Wiederaufbereitung", "terminAbweichungWiederaufbereitung ");
+        s.terminArtID = elements[53].replace("TerminartID", "terminArtID");
+        s.terminArtCode = elements[54].replace("TerminartCode", "terminArtCode ");
+        s.terminID = elements[55].replace("TerminID", "terminID ");
 
 
         return s;
 
     }
 
-    public Surgery parseBruderholz (String[] elements, Date[] dateElements, Time[]  timeElements, Integer[] numberElements, Character charelements[]){
 
-        Surgery s=new Surgery();
-        s.opDate=dateElements[1];
-        s.opRoom=elements[3];
-        s.start=timeElements[4];
-        s.end=timeElements[5];
-        s.opDuaration=numberElements[6];
-        s.meetingIdentifier=elements[7];
-        s.comment1=elements[8];
-        s.comment2=elements[9];
-        s.comment3=elements[10];
-        s.meetingNotice=elements[11];
-        s.tattCode=charelements[12];
-        s.taSequence=numberElements[13];
-        s.taCode=numberElements[14];
-        s.knotenID=numberElements[15];
-        s.taStatistic=numberElements[16];
-        s.knotenIdentifier=elements[17];
-        s.taIdnetifier=elements[18];
-        s.operatuer=elements[20];
-        s.assistance=elements[21];
-        s.anaesthesiaCare=elements[22];
-        s.instrumentation=elements[23];
-        s.zudienung=elements[24];
-        s.patientLastName=elements[25];
-        s.patientFirstName=elements[26];
-        s.birthDate=dateElements[27];
-        s.gender=charelements[28];
-        s.age=numberElements[29];
-        s.room=elements[30];
-        s.pID=numberElements[31];
-        s.fID=numberElements[32];
-        s.stay=elements[33];
-        s.discipline=elements[34];
-        s.oe=elements[35];
-        s.Klasse=elements[36];
-        s.categorie=elements[37];
-        s.entrance=dateElements[38];
-        s.entranceTime=timeElements[39];
-        s.leaving=dateElements[40];
-        s.leavingTime=timeElements[41];
-        s.p1PatientRequest=timeElements[42];
-        s.p3StartWrangle=timeElements[43];
-        s.o1StartPreparingOpFunction=timeElements[44];
-        s.o6StartPraesenzFirstOperateur=timeElements[45];
-        s.o5StartClean=timeElements[46];
-        s.o6StartPraesenzFirstOperateur=timeElements[47];
-        s.o8StartOp=timeElements[48];
-        s.o10EndOp=timeElements[49];
-        s.o11End=timeElements[50];
-        s.p7PatientOutOfOp=timeElements[51];
-        s.comment4=elements[54];
+    public static Surgery parseBruderholz(String[] elements) {
 
-        return s;
+        Surgery bh = new Surgery();
+        bh.opDate = elements[0].replace("OpDat_pp", "opDate");
+        bh.opRoom = elements[2].replace("OpSaal_pp", "opRoom");
+        bh.start = elements[3].replace("BelegungBeginn", "star");
+        bh.end = elements[4].replace("BelegungEnde", "end");
+        bh.opDuaration = elements[5].replace("BelegungDauerMin", "opDuaration ");
+        bh.meetingIdentifier = elements[6].replace("TerminBezeichnung", "meetingIdentifier ");
+        bh.comment1 = elements[7].replace("TerminText1", "comment1 ");
+        bh.comment2 = elements[8].replace("TerminText2", "comment2  ");
+        bh.comment3 = elements[9].replace("TerminText3", "comment3  ");
+        bh.meetingNotice = elements[10].replace("TerminBemerkungen", "meetingNotice ");
+        bh.tattCode = elements[11].replace("TATTCode", "tattCode ");
+        bh.taCode = elements[12].replace("TACode", "taCode ");
+        bh.taStatistic = elements[13].replace("TAStatistik", "taStatistic");
+        bh.taIdnetifier = elements[14].replace("TABezeichnung", "taIdnetifier ");
+        bh.operatuer = elements[15].replace("Operateur", "operatuer  ");
+        bh.assistance = elements[16].replace("Assistenz", "assistance");
+        bh.anaesthesia = elements[17].replace("Anaesthesie", "anaesthesia ");
+        bh.anaesthesiaCare = elements[18].replace("AnaePflege", "anaesthesiaCare  ");
+        bh.instrumentation = elements[19].replace("Instrumentierung", "instrumentation  ");
+        bh.zudienung = elements[20].replace("Zudienung", "zudienung ");
+        bh.patientLastName = elements[21].replace("Name_pp", "patientLastName ");
+        bh.patientFirstName = elements[22].replace("Vorname_pp", "patientFirstName ");
+        bh.birthDate = elements[23].replace("GebDat_pp", "birthDate");
+        bh.gender = elements[24].replace("Geschlecht_pp", "gender  ");
+        bh.age = elements[25].replace("Alter_pp", "age  ");
+        bh.room = elements[26].replace("Zimmer", "room ");
+        bh.pID = elements[27].replace("PID", "pID ");
+        bh.fID = elements[28].replace("PID", "fID ");
+        bh.stay = elements[29].replace("Aufenthalt", "stay  ");
+        bh.discipline = elements[30].replace("Disziplin_pp", "discipline ");
+        bh.oe = elements[31].replace("OE", "oe");
+        bh.klasse = elements[32].replace("Klasse", "klasse ");
+        bh.categorie = elements[33].replace("Kategorie", "categorie ");
+        bh.entrance = elements[34].replace("Eintritt", "entrance  ");
+        bh.entranceTime = elements[35].replace("EintrittZeit", "entranceTime  ");
+        bh.leaving = elements[36].replace("Austritt", "leaving  ");
+        bh.leavingTime = elements[37].replace("AustrittZeit", "leavingTime  ");
+        bh.p1PatientRequest = elements[38].replace("P1_PatAnf_pp", "p1PatientRequest ");
+        bh.p3StartWrangle = elements[39].replace("P3_BegEin_pp", "p3StartWrangle");
+        bh.p5PatientInOp = elements[40].replace("P5_ImSaal_pp", "p5PatientInOp ");
+        bh.o5StartClean = elements[41].replace("O5_BegAbwasch_pp", "o5StartClean");
+        bh.o6StartPraesenzFirstOperateur = elements[42].replace("O6_PräsOperateur_pp", "o6StartPraesenzFirstOperateur ");
+        bh.o8StartOp = elements[43].replace("O8_Schnitt_pp", "o8StartOp ");
+        bh.o10EndOp = elements[44].replace("O10_Naht_pp", "o10EndOp  ");
+        bh.o11End = elements[45].replace("O11_EndNachbMassn_pp", "o11End  ");
+        bh.p7PatientOutOfOp = elements[46].replace("P7_AusOp_pp", "p7PatientOutOfOp ");
+        bh.notFallSpezifikation = elements[49].replace("Notfallklassifikation", "notFallSpezifikation ");
+        bh.terminAbweichung = elements[50].replace("Termin_Abweichung", "terminAbweichung ");
+        bh.terminAbweichungVorbereitung = elements[51].replace("Termin_Abweichung_Vorbereitung", "terminAbweichungVorbereitung ");
+        bh.terminAbweichungWiederaufbereitung = elements[52].replace("Termin_Abweichung_Wiederaufbereitung", "terminAbweichungWiederaufbereitung ");
+        bh.terminArtID = elements[53].replace("TerminartID", "terminArtID");
+        bh.terminArtCode = elements[54].replace("TerminartCode", "terminArtCode ");
+        bh.terminID = elements[55].replace("TerminID", "terminID ");
+
+
+        return bh;
+
+    }
+
+
+    public static void main(String[] args) throws Exception {
+        ArrayList<Surgery> s = new ArrayList<Surgery>();
+        ArrayList<Surgery> bh = new ArrayList<Surgery>();
+        try {
+            s = addDatatonewCsvLiestal();
+            bh = addDatatonewCsvBruderholz();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //System.out.println(s.get(0).opDate);
+        //System.out.println(s.get(0).patientFirstName);
+        //System.out.println(bh.get(0).opDate);
+
+// Hier wird die NewList aus addDatatonewCsvLiestal() und addDatatonewCsvBruderholz() erstellt.
+
+        Set<Surgery> newSet = new HashSet<Surgery>(addDatatonewCsvLiestal());
+        newSet.addAll(addDatatonewCsvBruderholz());
+        ArrayList<Surgery> newList = new ArrayList<Surgery>(newSet);
+
+        // System.out.println(newList.toString());
+
+// Diese Methode speicher den Inhalt von NewList in eine neue CSV-Datei
+        listInDatei(newList,new File("/Users/TheGod/Desktop/Praxisprojekt/src/newFile.csv"));
+
+
+    }
+
+
+    public static ArrayList<Surgery> addDatatonewCsvLiestal(/*File file*/) throws Exception {
+        ArrayList<Surgery> surgeriesLi = new ArrayList<>();
+
+        try {
+            Scanner sc = new Scanner((new FileReader("/Users/TheGod/Desktop/Praxisprojekt/src/Polypoint RAP Liestal Februar 2016.csv")));
+            // boolean output = true;
+            String splitby = ";";
+
+            // int crt = 0;
+            while (sc.hasNextLine())
+
+            {
+
+                //System.out.println(crt++);
+                String line = sc.nextLine();
+
+                Surgery s = parseLiestal(line.split(splitby));
+
+                surgeriesLi.add(s);
+
+
+                //java.lang.String[] b = line.split(splitby);
+                /*if (output) {
+                    for (int i = 0; i < b.length; i++)
+                        System.out.println(b[i]);
+                    System.out.println("-----------------------------------------------------");
+                }*/
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return surgeriesLi;
+    }
+
+
+    public static ArrayList<Surgery> addDatatonewCsvBruderholz(/*File file*/) throws Exception {
+        ArrayList<Surgery> surgeriesBH = new ArrayList<>();
+
+        try {
+            Scanner sc2 = new Scanner((new FileReader("/Users/TheGod/Desktop/Praxisprojekt/src/Polypoint RAP Liestal Februar 2016.csv")));
+            // boolean output = true;
+            String splitby = ";";
+
+            // int crt = 0;
+            while (sc2.hasNextLine())
+
+            {
+
+                //System.out.println(crt++);
+                String line = sc2.nextLine();
+
+                Surgery bh = parseBruderholz(line.split(splitby));
+
+                surgeriesBH.add(bh);
+
+
+                //java.lang.String[] b = line.split(splitby);
+                /*if (output) {
+                    for (int i = 0; i < b.length; i++)
+                        System.out.println(b[i]);
+                    System.out.println("-----------------------------------------------------");
+                }*/
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return surgeriesBH;
+    }
+
+    /**
+     * Methode erstellt aus einer Liste eine Datei! Kein Rückgabewert, nur eine Funktion, die in der MainMethode ist.
+     * @param list
+     * @param file
+     */
+    private static void listInDatei(ArrayList<Surgery> list, File file) {
+        PrintWriter printWriter = null;
+        try {
+            printWriter = new PrintWriter(new FileWriter(file));
+            Iterator iter = list.iterator();
+            while (iter.hasNext()) {
+                Object o = iter.next();
+                printWriter.println(o);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (printWriter != null) printWriter.close();
+            } catch (Exception e) {
+            }
+        }
     }
 
 
 }
+
+
+
+
+
+
+
