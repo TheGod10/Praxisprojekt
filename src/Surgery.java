@@ -1,4 +1,4 @@
-
+import javafx.stage.FileChooser;
 
 import java.io.*;
 
@@ -211,66 +211,17 @@ public class Surgery {
 
     }
 
-
-    public static void main(String[] args) throws Exception {
-        ArrayList<Surgery> s = new ArrayList<Surgery>();
-        ArrayList<Surgery> bh = new ArrayList<Surgery>();
-        try {
-            s = addDatatonewCsvLiestal();
-            bh = addDatatonewCsvBruderholz();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //System.out.println(s.get(0).opDate);
-        //System.out.println(s.get(0).patientFirstName);
-        //System.out.println(bh.get(0).opDate);
-
-// Hier wird die NewList aus addDatatonewCsvLiestal() und addDatatonewCsvBruderholz() erstellt.
-
-        Set<Surgery> newSet = new HashSet<Surgery>(addDatatonewCsvLiestal());
-        newSet.addAll(addDatatonewCsvBruderholz());
-        ArrayList<Surgery> newList = new ArrayList<Surgery>(newSet);
-
-        // System.out.println(newList.toString());
-
-// Diese Methode speicher den Inhalt von NewList in eine neue CSV-Datei
-        listInDatei(newList,new File("/Users/TheGod/Desktop/Praxisprojekt/src/newFile.csv"));
-
-
-    }
-
-
-    public static ArrayList<Surgery> addDatatonewCsvLiestal(/*File file*/) throws Exception {
+    public static ArrayList<Surgery> addDatatonewCsvLiestal(File file) throws Exception {
         ArrayList<Surgery> surgeriesLi = new ArrayList<>();
-
         try {
-            Scanner sc = new Scanner((new FileReader("/Users/TheGod/Desktop/Praxisprojekt/src/Polypoint RAP Liestal Februar 2016.csv")));
-            // boolean output = true;
+            Scanner sc = new Scanner((new FileReader(file)));
             String splitby = ";";
-
-            // int crt = 0;
             while (sc.hasNextLine())
 
             {
-
-                //System.out.println(crt++);
                 String line = sc.nextLine();
-
                 Surgery s = parseLiestal(line.split(splitby));
-
                 surgeriesLi.add(s);
-
-
-                //java.lang.String[] b = line.split(splitby);
-                /*if (output) {
-                    for (int i = 0; i < b.length; i++)
-                        System.out.println(b[i]);
-                    System.out.println("-----------------------------------------------------");
-                }*/
-
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -279,35 +230,17 @@ public class Surgery {
     }
 
 
-    public static ArrayList<Surgery> addDatatonewCsvBruderholz(/*File file*/) throws Exception {
+    public static ArrayList<Surgery> addDatatonewCsvBruderholz(File file) throws Exception {
         ArrayList<Surgery> surgeriesBH = new ArrayList<>();
-
         try {
-            Scanner sc2 = new Scanner((new FileReader("/Users/TheGod/Desktop/Praxisprojekt/src/Polypoint RAP Liestal Februar 2016.csv")));
-            // boolean output = true;
+            Scanner sc2 = new Scanner((new FileReader(file)));
             String splitby = ";";
-
-            // int crt = 0;
             while (sc2.hasNextLine())
 
             {
-
-                //System.out.println(crt++);
                 String line = sc2.nextLine();
-
                 Surgery bh = parseBruderholz(line.split(splitby));
-
                 surgeriesBH.add(bh);
-
-
-                //java.lang.String[] b = line.split(splitby);
-                /*if (output) {
-                    for (int i = 0; i < b.length; i++)
-                        System.out.println(b[i]);
-                    System.out.println("-----------------------------------------------------");
-                }*/
-
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -315,36 +248,22 @@ public class Surgery {
         return surgeriesBH;
     }
 
-    /**
-     * Methode erstellt aus einer Liste eine Datei! Kein Rückgabewert, nur eine Funktion, die in der MainMethode ist.
-     * @param list
-     * @param file
-     */
-    private static void listInDatei(ArrayList<Surgery> list, File file) {
-        PrintWriter printWriter = null;
-        try {
-            printWriter = new PrintWriter(new FileWriter(file));
-            Iterator iter = list.iterator();
-            while (iter.hasNext()) {
-                Object o = iter.next();
-                printWriter.println(o);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (printWriter != null) printWriter.close();
-            } catch (Exception e) {
-            }
-        }
+
+    @Override
+    public String toString()
+    {
+
+        return  opDate +";"+opRoom+";"+start+";"+";"+end+";"+opDuaration+";"+meetingIdentifier+";"+comment1+";"+comment2+";"+comment3+";"+meetingNotice+";"+
+                tattCode+";"+taCode+";"+taStatistic+";"+
+                taIdnetifier+";"+operatuer+";"+assistance+";"+anaesthesia+";"+anaesthesiaCare+";"+instrumentation+";"+zudienung+";"+patientLastName+";"+
+                patientFirstName+";"+birthDate+";"+gender+";"+age+";"+room+";"+pID+";"+fID
+                +";"+stay+";"+discipline+";"+oe+";"+klasse+";"+entrance+";"+entranceTime+";"+leaving+";"+leavingTime+";"+p1PatientRequest+";"+p3StartWrangle+";"+
+                p5PatientInOp+";"+o5StartClean+";"+o6StartPraesenzFirstOperateur+";"+o8StartOp+";"+o10EndOp+";"+o11End+";"+p7PatientOutOfOp+";"+
+                notFallSpezifikation+";"+terminAbweichung+";"+terminAbweichungVorbereitung+";"+
+                terminAbweichungWiederaufbereitung+";"+terminArtID+";"+terminArtCode+";"+terminID;
     }
 
-
 }
-
-
-
-
 
 
 
