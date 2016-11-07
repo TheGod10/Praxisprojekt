@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class ParseBruderholz {
-    public static ArrayList<Surgery> addDatatonewCsvBruderholz(File file) throws Exception {
+public class ParseBruderholz implements Parser {
+
+
+    public  ArrayList<Surgery> parse(File file) throws Exception {
         ArrayList<Surgery> surgeriesBH = new ArrayList<>();
         try {
             Scanner sc2 = new Scanner((new FileReader(file)));

@@ -31,18 +31,28 @@ public class App extends Application {
         chooseFile(fileChooser);
         File file = fileChooser.showOpenDialog(primaryStage);
 
-        if (file.getName().contains("Liestal")|| file.getName().contains("Bruderholz")) {
-            new ParseLIestal().addDatatonewCsvLiestal(file);
-            File file2 = fileChooser.showOpenDialog(primaryStage);
-            new ParseBruderholz().addDatatonewCsvBruderholz(file2);
-        }else {
-            System.out.println("Please choose another file!");
-        }
+        Parser parser = Parser.resolveParser(file);
+        ArrayList<Surgery> surgeries = parser.parse(file);
 
 
-        Set<Surgery> newSet = new HashSet<Surgery>(ParseLIestal.addDatatonewCsvLiestal(file));
-        newSet.addAll(ParseBruderholz.addDatatonewCsvBruderholz(file));
+
+
+        FileChooser fileChooser2 = new FileChooser();
+        chooseFile(fileChooser2);
+        File file2 = fileChooser2.showOpenDialog(primaryStage);
+
+        Parser parser2 = Parser.resolveParser(file2);
+        ArrayList<Surgery> surgeries2 = parser2.parse(file2);
+
+
+
+
+
+
+        Set<Surgery> newSet = new HashSet<Surgery>(surgeries);
+        newSet.addAll(surgeries2);
         ArrayList<Surgery> newList = new ArrayList<Surgery>(newSet);
+
 
         listInDatei(newList,new File("/Users/TheGod/Desktop/Praxisprojekt/src/newFile.csv"));
 
