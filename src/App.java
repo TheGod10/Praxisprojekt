@@ -2,6 +2,8 @@
  * Created by TheGod on 03.11.16.
  */
 
+import dataModel.Surgery;
+import input.*;
 import javafx.application.Application;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -30,18 +32,17 @@ public class App extends Application {
         File file = fileChooser.showOpenDialog(primaryStage);
 
         if (file.getName().contains("Liestal")|| file.getName().contains("Bruderholz")) {
-            new Surgery().addDatatonewCsvLiestal(file);
+            new ParseLIestal().addDatatonewCsvLiestal(file);
             File file2 = fileChooser.showOpenDialog(primaryStage);
-            new Surgery().addDatatonewCsvBruderholz(file2);
+            new ParseBruderholz().addDatatonewCsvBruderholz(file2);
         }else {
             System.out.println("Please choose another file!");
         }
 
 
-        Set<Surgery> newSet = new HashSet<Surgery>(Surgery.addDatatonewCsvLiestal(file));
-        newSet.addAll(Surgery.addDatatonewCsvBruderholz(file));
+        Set<Surgery> newSet = new HashSet<Surgery>(ParseLIestal.addDatatonewCsvLiestal(file));
+        newSet.addAll(ParseBruderholz.addDatatonewCsvBruderholz(file));
         ArrayList<Surgery> newList = new ArrayList<Surgery>(newSet);
-
 
         listInDatei(newList,new File("/Users/TheGod/Desktop/Praxisprojekt/src/newFile.csv"));
 
@@ -69,8 +70,6 @@ public class App extends Application {
             }
         }
     }
-
-
 
 
     public void chooseFile(FileChooser fileChooser) {

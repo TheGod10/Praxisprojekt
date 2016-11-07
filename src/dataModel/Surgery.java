@@ -1,9 +1,4 @@
-import javafx.stage.FileChooser;
-
-import java.io.*;
-
-import java.util.*;
-import java.util.stream.Collectors;
+package dataModel;
 
 
 /**
@@ -210,44 +205,6 @@ public class Surgery {
         return bh;
 
     }
-
-    public static ArrayList<Surgery> addDatatonewCsvLiestal(File file) throws Exception {
-        ArrayList<Surgery> surgeriesLi = new ArrayList<>();
-        try {
-            Scanner sc = new Scanner((new FileReader(file)));
-            String splitby = ";";
-            while (sc.hasNextLine())
-
-            {
-                String line = sc.nextLine();
-                Surgery s = parseLiestal(line.split(splitby));
-                surgeriesLi.add(s);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return surgeriesLi;
-    }
-
-
-    public static ArrayList<Surgery> addDatatonewCsvBruderholz(File file) throws Exception {
-        ArrayList<Surgery> surgeriesBH = new ArrayList<>();
-        try {
-            Scanner sc2 = new Scanner((new FileReader(file)));
-            String splitby = ";";
-            while (sc2.hasNextLine())
-
-            {
-                String line = sc2.nextLine();
-                Surgery bh = parseBruderholz(line.split(splitby));
-                surgeriesBH.add(bh);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return surgeriesBH;
-    }
-
 
     @Override
     public String toString()
