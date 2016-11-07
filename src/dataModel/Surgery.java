@@ -80,6 +80,8 @@ public class Surgery {
     private String terminID;
     private String comment4;
 
+    private double exampleNumericColumn;
+
 
     public static Surgery parseLiestal(String[] elements) {
 
@@ -199,12 +201,33 @@ public class Surgery {
         bh.terminAbweichungWiederaufbereitung = elements[52].replace("Termin_Abweichung_Wiederaufbereitung", "terminAbweichungWiederaufbereitung ");
         bh.terminArtID = elements[53].replace("TerminartID", "terminArtID");
         bh.terminArtCode = elements[54].replace("TerminartCode", "terminArtCode ");
-        bh.terminID = elements[55].replace("TerminID", "terminID ");
+
+
+        boolean isParsingOk = true;
+
+        bh.terminArtCode = parseElement(elements, 54);
+
+        try {
+            bh.exampleNumericColumn = Double.parseDouble(parseElement(elements, 33));
+        } catch (NumberFormatException e) {
+            isParsingOk = false;
+        }
+
+        // bh.terminID = elements[55].replace("TerminID", "terminID ");
 
 
         return bh;
 
     }
+
+    static String parseElement(String[] elements, int index) {
+        if (index >= elements.length) {
+            return "";
+        } else {
+            return elements[index];
+        }
+    }
+
 
     @Override
     public String toString()
