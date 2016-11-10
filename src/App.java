@@ -33,7 +33,7 @@ public class App extends Application {
         gridPane.setHgap(7);
         gridPane.setVgap(7);
 
-        Button run = new Button("Run");
+        Label info = new Label();
 
 // Label, Button, FileCHooser für die erste Datei
         Label label = new Label("Wähle die gewünschte Datei:");
@@ -110,6 +110,7 @@ public class App extends Application {
                         mergeButton.setOnAction(e3 -> {
                             // newList in eine CSV Datei einlesen
                             listInDatei(newList, new File("/Users/TheGod/Desktop/Praxisprojekt/src/newFile.csv"));
+                            info.setText("Merge Datei wurde erstellt!");
 
                         });
                     } catch (Exception e2) {
@@ -135,7 +136,7 @@ public class App extends Application {
         gridPane.add(getFileNameLabel2, 1, 3);
         gridPane.add(mergeLabel, 0, 4);
         gridPane.add(mergeButton, 1, 4);
-        gridPane.add(run, 0, 5);
+        gridPane.add(info, 0, 5);
 
 
         primaryStage.setScene(new Scene(gridPane, 500, 500));
