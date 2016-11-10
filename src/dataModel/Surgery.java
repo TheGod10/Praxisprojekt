@@ -86,135 +86,352 @@ public class Surgery {
     public static Surgery parseLiestal(String[] elements) {
 
         Surgery s = new Surgery();
-        s.opDate = elements[0].replace("OpDat_pp", "opDate");
-        s.opRoom = elements[2].replace("OpSaal_pp", "opRoom");
-        s.start = elements[3].replace("BelegungBeginn", "star");
-        s.end = elements[4].replace("BelegungEnde", "end");
-        s.opDuaration = elements[5].replace("BelegungDauerMin", "opDuaration ");
-        s.meetingIdentifier = elements[6].replace("TerminBezeichnung", "meetingIdentifier ");
-        s.comment1 = elements[7].replace("TerminText1", "comment1 ");
-        s.comment2 = elements[8].replace("TerminText2", "comment2  ");
-        s.comment3 = elements[9].replace("TerminText3", "comment3  ");
-        s.meetingNotice = elements[10].replace("TerminBemerkungen", "meetingNotice ");
-        s.tattCode = elements[11].replace("TATTCode", "tattCode ");
-        s.taCode = elements[12].replace("TACode", "taCode ");
-        s.taStatistic = elements[13].replace("TAStatistik", "taStatistic");
-        s.taIdnetifier = elements[14].replace("TABezeichnung", "taIdnetifier ");
-        s.operatuer = elements[15].replace("Operateur", "operatuer  ");
-        s.assistance = elements[16].replace("Assistenz", "assistance");
-        s.anaesthesia = elements[17].replace("Anaesthesie", "anaesthesia ");
-        s.anaesthesiaCare = elements[18].replace("AnaePflege", "anaesthesiaCare  ");
-        s.instrumentation = elements[19].replace("Instrumentierung", "instrumentation  ");
-        s.zudienung = elements[20].replace("Zudienung", "zudienung ");
-        s.patientLastName = elements[21].replace("Name_pp", "patientLastName ");
-        s.patientFirstName = elements[22].replace("Vorname_pp", "patientFirstName ");
-        s.birthDate = elements[23].replace("GebDat_pp", "birthDate");
-        s.gender = elements[24].replace("Geschlecht_pp", "gender  ");
-        s.age = elements[25].replace("Alter_pp", "age  ");
-        s.room = elements[26].replace("Zimmer", "room ");
-        s.pID = elements[27].replace("PID", "pID ");
-        s.fID = elements[28].replace("PID", "fID ");
-        s.stay = elements[29].replace("Aufenthalt", "stay  ");
-        s.discipline = elements[30].replace("Disziplin_pp", "discipline ");
-        s.oe = elements[31].replace("OE", "oe");
-        s.klasse = elements[32].replace("Klasse", "klasse ");
-        s.categorie = elements[33].replace("Kategorie", "categorie ");
-        s.entrance = elements[34].replace("Eintritt", "entrance  ");
-        s.entranceTime = elements[35].replace("EintrittZeit", "entranceTime  ");
-        s.leaving = elements[36].replace("Austritt", "leaving  ");
-        s.leavingTime = elements[37].replace("AustrittZeit", "leavingTime  ");
-        s.p1PatientRequest = elements[38].replace("P1_PatAnf_pp", "p1PatientRequest ");
-        s.p3StartWrangle = elements[39].replace("P3_BegEin_pp", "p3StartWrangle");
-        s.p5PatientInOp = elements[40].replace("P5_ImSaal_pp", "p5PatientInOp ");
-        s.o5StartClean = elements[41].replace("O5_BegAbwasch_pp", "o5StartClean");
-        s.o6StartPraesenzFirstOperateur = elements[42].replace("O6_PräsOperateur_pp", "o6StartPraesenzFirstOperateur ");
-        s.o8StartOp = elements[43].replace("O8_Schnitt_pp", "o8StartOp ");
-        s.o10EndOp = elements[44].replace("O10_Naht_pp", "o10EndOp  ");
-        s.o11End = elements[45].replace("O11_EndNachbMassn_pp", "o11End  ");
-        s.p7PatientOutOfOp = elements[46].replace("P7_AusOp_pp", "p7PatientOutOfOp ");
-        s.notFallSpezifikation = elements[49].replace("Notfallklassifikation", "notFallSpezifikation ");
-        s.terminAbweichung = elements[50].replace("Termin_Abweichung", "terminAbweichung ");
-        s.terminAbweichungVorbereitung = elements[51].replace("Termin_Abweichung_Vorbereitung", "terminAbweichungVorbereitung ");
-        s.terminAbweichungWiederaufbereitung = elements[52].replace("Termin_Abweichung_Wiederaufbereitung", "terminAbweichungWiederaufbereitung ");
-        s.terminArtID = elements[53].replace("TerminartID", "terminArtID");
-        s.terminArtCode = elements[54].replace("TerminartCode", "terminArtCode ");
-        s.terminID = elements[55].replace("TerminID", "terminID ");
+
+        try {
+            s.opDate = parseElement(elements, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            s.opRoom = parseElement(elements, 2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            s.start = parseElement(elements, 3);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            s.end = parseElement(elements, 4);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+
+            s.opDuaration = parseElement(elements, 5);
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+
+        s.meetingIdentifier = parseElement(elements, 6);
+        s.comment1 = parseElement(elements, 7);
+        s.comment2 = parseElement(elements, 8);
+        s.comment3 = parseElement(elements, 9);
+        s.meetingNotice = parseElement(elements, 10);
+
+
+        s.tattCode = parseElement(elements, 11);
+
+
+        try {
+            s.taCode = parseElement(elements, 12);
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+
+        s.taStatistic = parseElement(elements, 13);
+
+        s.taIdnetifier = parseElement(elements, 14);
+
+        s.operatuer = parseElement(elements, 15);
+
+        s.assistance = parseElement(elements, 16);
+        s.anaesthesia = parseElement(elements, 17);
+        s.anaesthesiaCare = parseElement(elements, 18);
+
+        s.instrumentation = parseElement(elements, 19);
+        s.zudienung = parseElement(elements, 20);
+
+        s.patientLastName = parseElement(elements, 21);
+        s.patientFirstName = parseElement(elements, 22);
+
+
+        s.birthDate = parseElement(elements, 23);
+
+
+        s.gender = parseElement(elements, 24);
+
+
+        try {
+            s.age = parseElement(elements, 25);
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        s.room = parseElement(elements, 26);
+
+
+        try {
+
+            s.pID = parseElement(elements, 27);
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            s.fID = parseElement(elements, 28);
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+
+        s.stay = parseElement(elements, 29);
+        s.discipline = parseElement(elements, 30);
+        s.oe = parseElement(elements, 31);
+        s.klasse = parseElement(elements, 32);
+        s.categorie = parseElement(elements, 33);
+
+
+        s.entrance = parseElement(elements, 34);
+
+
+        s.entranceTime = parseElement(elements, 35);
+
+
+        s.leaving = parseElement(elements, 36);
+
+
+        s.leavingTime = parseElement(elements, 37);
+
+
+        s.p1PatientRequest = parseElement(elements, 38);
+        s.p3StartWrangle = parseElement(elements, 39);
+        s.p5PatientInOp = parseElement(elements, 40);
+        s.o5StartClean = parseElement(elements, 41);
+        s.o6StartPraesenzFirstOperateur = parseElement(elements, 42);
+        s.o8StartOp = parseElement(elements, 43);
+        s.o10EndOp = parseElement(elements, 44);
+        s.o11End = parseElement(elements, 45);
+        s.p7PatientOutOfOp = parseElement(elements, 46);
+        s.notFallSpezifikation = parseElement(elements, 49);
+
+
+        try {
+
+            s.terminAbweichung = parseElement(elements, 50);
+
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+
+            s.terminAbweichungVorbereitung = parseElement(elements, 51);
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        try {
+
+
+            s.terminAbweichungWiederaufbereitung = parseElement(elements, 52);
+
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        try {
+
+
+            s.terminArtID = parseElement(elements, 53);
+
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        try {
+
+
+            s.terminArtCode = parseElement(elements, 54);
+
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+
+        }
+        s.terminID = parseElement(elements, 55);
 
 
         return s;
 
-    }
 
+    }
 
     public static Surgery parseBruderholz(String[] elements) {
 
         Surgery bh = new Surgery();
-        bh.opDate = elements[0].replace("OpDat_pp", "opDate");
-        bh.opRoom = elements[2].replace("OpSaal_pp", "opRoom");
-        bh.start = elements[3].replace("BelegungBeginn", "star");
-        bh.end = elements[4].replace("BelegungEnde", "end");
-        bh.opDuaration = elements[5].replace("BelegungDauerMin", "opDuaration ");
-        bh.meetingIdentifier = elements[6].replace("TerminBezeichnung", "meetingIdentifier ");
-        bh.comment1 = elements[7].replace("TerminText1", "comment1 ");
-        bh.comment2 = elements[8].replace("TerminText2", "comment2  ");
-        bh.comment3 = elements[9].replace("TerminText3", "comment3  ");
-        bh.meetingNotice = elements[10].replace("TerminBemerkungen", "meetingNotice ");
-        bh.tattCode = elements[11].replace("TATTCode", "tattCode ");
-        bh.taCode = elements[12].replace("TACode", "taCode ");
-        bh.taStatistic = elements[13].replace("TAStatistik", "taStatistic");
-        bh.taIdnetifier = elements[14].replace("TABezeichnung", "taIdnetifier ");
-        bh.operatuer = elements[15].replace("Operateur", "operatuer  ");
-        bh.assistance = elements[16].replace("Assistenz", "assistance");
-        bh.anaesthesia = elements[17].replace("Anaesthesie", "anaesthesia ");
-        bh.anaesthesiaCare = elements[18].replace("AnaePflege", "anaesthesiaCare  ");
-        bh.instrumentation = elements[19].replace("Instrumentierung", "instrumentation  ");
-        bh.zudienung = elements[20].replace("Zudienung", "zudienung ");
-        bh.patientLastName = elements[21].replace("Name_pp", "patientLastName ");
-        bh.patientFirstName = elements[22].replace("Vorname_pp", "patientFirstName ");
-        bh.birthDate = elements[23].replace("GebDat_pp", "birthDate");
-        bh.gender = elements[24].replace("Geschlecht_pp", "gender  ");
-        bh.age = elements[25].replace("Alter_pp", "age  ");
-        bh.room = elements[26].replace("Zimmer", "room ");
-        bh.pID = elements[27].replace("PID", "pID ");
-        bh.fID = elements[28].replace("PID", "fID ");
-        bh.stay = elements[29].replace("Aufenthalt", "stay  ");
-        bh.discipline = elements[30].replace("Disziplin_pp", "discipline ");
-        bh.oe = elements[31].replace("OE", "oe");
-        bh.klasse = elements[32].replace("Klasse", "klasse ");
-        bh.categorie = elements[33].replace("Kategorie", "categorie ");
-        bh.entrance = elements[34].replace("Eintritt", "entrance  ");
-        bh.entranceTime = elements[35].replace("EintrittZeit", "entranceTime  ");
-        bh.leaving = elements[36].replace("Austritt", "leaving  ");
-        bh.leavingTime = elements[37].replace("AustrittZeit", "leavingTime  ");
-        bh.p1PatientRequest = elements[38].replace("P1_PatAnf_pp", "p1PatientRequest ");
-        bh.p3StartWrangle = elements[39].replace("P3_BegEin_pp", "p3StartWrangle");
-        bh.p5PatientInOp = elements[40].replace("P5_ImSaal_pp", "p5PatientInOp ");
-        bh.o5StartClean = elements[41].replace("O5_BegAbwasch_pp", "o5StartClean");
-        bh.o6StartPraesenzFirstOperateur = elements[42].replace("O6_PräsOperateur_pp", "o6StartPraesenzFirstOperateur ");
-        bh.o8StartOp = elements[43].replace("O8_Schnitt_pp", "o8StartOp ");
-        bh.o10EndOp = elements[44].replace("O10_Naht_pp", "o10EndOp  ");
-        bh.o11End = elements[45].replace("O11_EndNachbMassn_pp", "o11End  ");
-        bh.p7PatientOutOfOp = elements[46].replace("P7_AusOp_pp", "p7PatientOutOfOp ");
-        bh.notFallSpezifikation = elements[49].replace("Notfallklassifikation", "notFallSpezifikation ");
-        bh.terminAbweichung = elements[50].replace("Termin_Abweichung", "terminAbweichung ");
-        bh.terminAbweichungVorbereitung = elements[51].replace("Termin_Abweichung_Vorbereitung", "terminAbweichungVorbereitung ");
-        bh.terminAbweichungWiederaufbereitung = elements[52].replace("Termin_Abweichung_Wiederaufbereitung", "terminAbweichungWiederaufbereitung ");
-        bh.terminArtID = elements[53].replace("TerminartID", "terminArtID");
-        bh.terminArtCode = elements[54].replace("TerminartCode", "terminArtCode ");
 
-
-        boolean isParsingOk = true;
-
-        bh.terminArtCode = parseElement(elements, 54);
 
         try {
-            bh.exampleNumericColumn = Double.parseDouble(parseElement(elements, 33));
-        } catch (NumberFormatException e) {
-            isParsingOk = false;
+            System.out.println("parsing " + parseElement(elements, 0));
+            bh.opDate = parseElement(elements, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        // bh.terminID = elements[55].replace("TerminID", "terminID ");
 
+        bh.opRoom = parseElement(elements, 2);
+
+
+        try {
+            bh.start =parseElement(elements,3);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            bh.end = parseElement(elements,4);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            bh.opDuaration = parseElement(elements,5);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+
+        bh.meetingIdentifier = parseElement(elements,6);
+        bh.comment1 = parseElement(elements,7);
+        bh.comment2 = parseElement(elements,8);
+        bh.comment3 = parseElement(elements,9);
+        bh.meetingNotice = parseElement(elements,10);
+        bh.tattCode = parseElement(elements,11);
+
+
+        try {
+            bh.taSequence=parseElement(elements,12);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+
+
+        try {
+            bh.taCode =parseElement(elements,13);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+
+
+        try {
+            bh.knotenID=parseElement(elements,14);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        bh.taStatistic = parseElement(elements,15);
+        bh.knotenIdentifier=parseElement(elements,16);
+        bh.taIdnetifier = parseElement(elements,17);
+        bh.operatuer = parseElement(elements,18);
+        bh.assistance =parseElement(elements,19);
+        bh.anaesthesia = parseElement(elements,20);
+        bh.anaesthesiaCare = parseElement(elements,21);
+        bh.instrumentation =parseElement(elements,22);
+        bh.zudienung = parseElement(elements,23);
+        bh.patientLastName = parseElement(elements,24);
+        bh.patientFirstName = parseElement(elements,25);
+
+
+        try {
+            bh.birthDate = parseElement(elements,26);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        bh.gender =parseElement(elements,28);
+
+        try {
+            bh.age = parseElement(elements,29);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        bh.room = parseElement(elements,30);
+
+
+        try {
+            bh.pID =parseElement(elements,31);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            bh.fID =parseElement(elements,32);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        bh.stay = parseElement(elements,33);
+        bh.discipline = parseElement(elements,34);
+        bh.oe = parseElement(elements,35);
+        bh.klasse = parseElement(elements,36);
+        bh.categorie = parseElement(elements,37);
+
+
+        try {
+            bh.entrance =parseElement(elements,38);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            bh.entranceTime = parseElement(elements,39);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            bh.leaving =parseElement(elements,40);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            bh.leavingTime = parseElement(elements,41);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        bh.p1PatientRequest = parseElement(elements,42);
+        bh.p3StartWrangle =parseElement(elements,43);
+        bh.o1StartPreparingOpFunction=parseElement(elements,44);
+        bh.o6StartPraesenzFirstOperateur=parseElement(elements,45);
+        bh.o5StartClean=parseElement(elements,46);
+        bh.o6StartPraesenzFirstOperateur=parseElement(elements,47);
+        bh.o8StartOp=parseElement(elements,48);
+        bh.o10EndOp=parseElement(elements,49);
+        bh.o11End=parseElement(elements,50);
+        bh.p7PatientOutOfOp=parseElement(elements,51);
+        bh.comment4=parseElement(elements,54);
+
+        try {
+            bh.terminID =parseElement(elements,55);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
 
         return bh;
 

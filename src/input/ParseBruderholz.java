@@ -23,12 +23,17 @@ public class ParseBruderholz implements Parser {
                 String line = sc2.nextLine();
                 Surgery bh = Surgery.parseBruderholz(line.split(splitby));
                 surgeriesBH.add(bh);
-                System.out.println(i+":"+ line.split(splitby).length);
+               // System.out.println(i+":"+ line.split(splitby).length);
                 i++;
             }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return surgeriesBH;
     }
+
+
+
 }
