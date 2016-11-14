@@ -1,14 +1,17 @@
 import dataModel.Surgery;
 import input.*;
 import javafx.application.Application;
+import javafx.concurrent.Service;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,20 +20,36 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class App extends Application {
     File firstFile;
     File secondFile;
 
+
+
+    File mergedFile;
+
+    Button mergeButton = new Button("OK");
+    Label mergeLabel = new Label("Mergen:");
+
     ArrayList<Surgery> surgeries;
     ArrayList<Surgery> surgeries2;
 
+    Label infoMerge = new Label();
 
+    Label getName1 = new Label();
+    Label getName2 = new Label();
 
+    Label label = new Label("Wähle die gewünschte Datei:");
+    Button button = new Button("Datei Auswahl!");
 
+    Label label2 = new Label("Wähle die gewünschte Datei:");
+    Button button2 = new Button("Datei Auswahl!");
 
+    Button run = new Button("Run");
 
-  //  File mergedFile = new File("/Users/TheGod/Desktop/Praxisprojekt/src/newFile.csv");
 
     public static void main(String[] args) {
         launch(args);
@@ -40,16 +59,17 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
 
 
+
+
         final GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setHgap(7);
         gridPane.setVgap(7);
 
-        Label info = new Label();
+
 
 // Label, Button, FileCHooser für die erste Datei
-        Label label = new Label("Wähle die gewünschte Datei:");
-        Button button = new Button("Datei Auswahl!");
+
         FileChooser fileChooser = new FileChooser();
         fileChooserExtensionFilter(fileChooser);
 
@@ -60,27 +80,29 @@ public class App extends Application {
         Label ausgewählteDateiLabel2 = new Label("Die ausgewählte Datei:");
 
 // Label, Button, FileCHooser für die zweite Datei
-        Label label2 = new Label("Wähle die gewünschte Datei:");
-        Button button2 = new Button("Datei Auswahl!");
+
         FileChooser fileChooser2 = new FileChooser();
         fileChooserExtensionFilter(fileChooser2);
 
         // Label zeigt FileName an
 
 
-// Label & Button für Mergen
-        Label mergeLabel = new Label("Mergen:");
-        Button mergeButton = new Button("OK");
+// Label & Button gesperrt!
+        button2.setDisable(true);
+        label2.setDisable(true);
+
+        mergeLabel.setDisable(true);
+        mergeButton.setDisable(true);
+
+        run.setDisable(true);
 
 
 // ButtonAktivität für die erste Datei
         button.setOnAction(e -> {
-            Label getNameFirstFile;
+            enableButton2();
             // FileChooser für die erste Datei
           firstFile = fileChooser.showOpenDialog(null);
-            getNameFirstFile = new Label(firstFile.getName());
-
-
+                        getName1.setText(firstFile.getName());
             Parser parser = null;
             try {
                 parser = Parser.resolveParser(firstFile);
@@ -99,11 +121,10 @@ public class App extends Application {
 //------------------------------------------------------------------------------------------------------------------
 
         button2.setOnAction(e -> {
-
+            enableMergeButton();
             // 2. FileChooser für die zweite Datei
             secondFile = fileChooser2.showOpenDialog(primaryStage);
-
-
+            getName2.setText(secondFile.getName());
 
             Parser parser2 = null;
             try {
@@ -118,20 +139,12 @@ public class App extends Application {
                 e1.printStackTrace();
             }
         });
-/*
-        Label getName1;
-        Label getName2 = new Label();*/
-
-       /* getName1 = new Label(firstFile.getName());
-        getName2 = new Label(firstFile.getName());*/
-
-
 
 
 //------------------------------------------------------------------------------------------------------------------
         // Button zum Mergen
         mergeButton.setOnAction(e -> {
-
+        enableRun();
 // surgeries & surgeries2 zu newList zusammenführen
             Set<Surgery> newSet = new HashSet<Surgery>(surgeries);
             newSet.addAll(surgeries2);
@@ -139,8 +152,22 @@ public class App extends Application {
 
 
             // newList in eine CSV Datei einlesen
-            listInDatei(newList, new File("/Users/TheGod/Desktop/Praxisprojekt/src/newFile.csv"));
-            info.setText("Merge Datei wurde erstellt!");
+
+            FileChooser dc = new FileChooser();
+            mergedFile = dc.showSaveDialog(primaryStage);
+                listInDatei(newList, mergedFile);
+                infoMerge.setText("Merge Datei wurde erstellt!");
+        });
+
+
+        Button closeButton = new Button("Close");
+        closeButton.setOnAction(e -> {
+            primaryStage.close();
+        });
+
+
+        run.setOnAction(e -> {
+           run();
         });
 
 
@@ -150,12 +177,14 @@ public class App extends Application {
         gridPane.add(label2, 0, 1);
         gridPane.add(button2, 1, 1);
         gridPane.add(ausgewählteDateiLabel, 0, 2);
-       // gridPane.add(getName1, 1, 2);
+        gridPane.add(getName1, 1, 2);
         gridPane.add(ausgewählteDateiLabel2, 0, 3);
-       // gridPane.add(getName2, 1, 3);
+        gridPane.add(getName2, 1, 3);
         gridPane.add(mergeLabel, 0, 4);
         gridPane.add(mergeButton, 1, 4);
-        gridPane.add(info, 0, 5);
+        gridPane.add(infoMerge, 0, 5);
+        gridPane.add(closeButton, 0, 6);
+        gridPane.add(run, 1, 6);
 
 
         primaryStage.setScene(new Scene(gridPane, 500, 500));
@@ -168,6 +197,7 @@ public class App extends Application {
     private static void listInDatei(ArrayList<Surgery> list, File file) {
         PrintWriter printWriter = null;
         try {
+
             printWriter = new PrintWriter(new FileWriter(file));
             Iterator iter = list.iterator();
 
@@ -204,10 +234,31 @@ public class App extends Application {
     }
 
 
-    public static Label getNameFile(File file){
-        Label getName = new Label(file.getName());
-        return getName;
+
+
+    public void enableButton2(){
+        button2.setDisable(false);
+        label2.setDisable(false);
+
+    }
+    public void enableMergeButton(){
+        mergeButton.setDisable(false);
+        mergeLabel.setDisable(false);
+
     }
 
+    public void enableRun(){
+        run.setDisable(false);
+
+
+    }
+    public void run(){
+        try {
+            Desktop.getDesktop().open(mergedFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
+    
