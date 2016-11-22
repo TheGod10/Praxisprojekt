@@ -1,0 +1,40 @@
+
+.root{
+     -fx-background-color: linear-gradient(#ecf0f4,#c3daf0);
+}
+
+
+.popup{
+     -fx-background-color: linear-gradient(#ecf0f4,#c3daf0);
+}
+
+.label {
+    -fx-font-size: 12px;
+
+    -fx-text-fill: #04070b;
+}
+
+.button {
+    -fx-text-fill: white;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#b0b7bf, #a2b5c7);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-background-radius: 8;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#8ea5bd, #8ebae7);
+}
+
+
+.text-welcome{
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+
+.label-getNameNotification{
+ -fx-font-size: 12px;
+ -fx-text-fill: #FF0000;
+}

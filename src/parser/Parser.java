@@ -1,6 +1,9 @@
-package input;
+package parser;
 
-import dataModel.Surgery;
+import dataModel.SurgeryDataModel;
+import input.ReadBruderholzData;
+import input.ReadLiestalData;
+
 
 import java.io.File;
 import java.util.ArrayList;
@@ -11,15 +14,15 @@ import java.util.ArrayList;
  */
 public interface Parser {
 
-    ArrayList<Surgery> parse(File file) throws Exception;
+    ArrayList<SurgeryDataModel> parse(File file) throws Exception;
 
     static Parser resolveParser(File file) throws Exception {
         if (file.getName().contains("Liestal")) {
             System.out.println(file.getName());
-            return new ParseLIestal();
+            return new ReadLiestalData();
         } else if (file.getName().contains("Bruderholz")){
             System.out.println(file.getName());
-            return new ParseBruderholz();
+            return new ReadBruderholzData();
         }
         else {
             return null;

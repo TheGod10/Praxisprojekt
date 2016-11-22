@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="Praxisprojekt:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Praxisprojekt_jar</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="App" />
+        <option name="description" value="" />
+        <option name="htmlParamFile" value="" />
+        <option name="paramFile" value="" />
+        <option name="title" value="App" />
+        <option name="vendor" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="module-output" name="Praxisprojekt" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../super-csv-distribution-2/super-csv/super-csv-2.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/opencsv-3.8.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

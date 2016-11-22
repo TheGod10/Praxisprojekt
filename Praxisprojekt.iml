@@ -16,5 +16,41 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <ANNOTATIONS>
+          <root url="file://$MODULE_DIR$/../super-csv-distribution-2" />
+        </ANNOTATIONS>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../super-csv-distribution-2" />
+          <root url="file://$MODULE_DIR$/../super-csv-distribution-2" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="file://$MODULE_DIR$/../super-csv-distribution-2" />
+        </JAVADOC>
+        <NATIVE>
+          <root url="file://$MODULE_DIR$/../super-csv-distribution-2" />
+        </NATIVE>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../super-csv-distribution-2" />
+          <root url="file://$MODULE_DIR$/../super-csv-distribution-2" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/../super-csv-distribution-2" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../super-csv-distribution-2" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../super-csv-distribution-2/super-csv/super-csv-2.4.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../super-csv-distribution-2/super-csv/super-csv-2.4.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../super-csv-distribution-2/super-csv/super-csv-2.4.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
