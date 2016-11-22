@@ -15,7 +15,7 @@ import static input.ReadLiestalData.parseCSV;
 public class ReadBruderholzData implements Parser {
 
 
-    public  ArrayList<SurgeryDataModel> parse(File file) throws Exception {
+    public  ArrayList<SurgeryDataModel> parse(File file) throws ExceptionHandling {
         ArrayList<SurgeryDataModel> surgeriesBH = new ArrayList<>();
         try {
             Scanner sc2 = new Scanner((new FileReader(file)));

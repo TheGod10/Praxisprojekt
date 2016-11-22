@@ -36,13 +36,13 @@ public class ReadLiestalData  implements Parser  {
                 String line = sc.nextLine();
 
 
-                String[] tokens = line.split(splitby,-1);
+/*                String[] tokens = line.split(splitby,-1);
                 System.out.println(i+":"+ tokens.length);
                 for (int j = 0; j < tokens.length; j++) {
                     String token = tokens[j];
                     System.out.print(token + ", ");
                 }
-                System.out.println();
+                System.out.println();*/
 
                 SurgeryDataModel s = SurgeryDataModel.parseLiestal(parseCSV(line));
                 surgeriesLi.add(s);
@@ -82,6 +82,8 @@ public class ReadLiestalData  implements Parser  {
 
   We could do this via regex, but this would likely be more complicated, harder to read and more error prone.
   */
+
+
         boolean inQuotes = false; // initially, we are not inQuotes.
         ArrayList<String> elements = new ArrayList<String>(); // here, we store the strings we parse
         StringBuilder strBuilder = new StringBuilder(); // we use this to build our strinbgs while parsing

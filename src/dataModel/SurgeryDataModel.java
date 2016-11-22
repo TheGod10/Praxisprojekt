@@ -10,6 +10,7 @@ package dataModel;
  */
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -134,8 +135,11 @@ public class SurgeryDataModel {
 
         try {
 
-
-            bh.opDate =convertStringToDate( parseElement(elements, 0));
+            if (isThisDateValid(parseElement(elements,0),"dd.MM.yyyy")) {
+                bh.opDate =convertStringToDate( parseElement(elements, 0));
+            } else {
+                System.out.println("hier stimmt was nicht brooo:  ");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -293,6 +297,7 @@ public class SurgeryDataModel {
 
 
         try {
+
             bh.birthDate = convertStringToDate(parseElement(elements, 26));
         } catch (Exception e) {
             e.printStackTrace();
@@ -490,7 +495,12 @@ public class SurgeryDataModel {
 
         try {
 
-            s.opDate = convertStringToDate(parseElement(elements, 0));
+            if (isThisDateValid(parseElement(elements,0),"dd.MM.yyyy")) {
+                s.opDate = convertStringToDate(parseElement(elements, 0));
+            } else {
+                System.out.println("hier stimmt was nicht brooo:  ");
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -503,7 +513,7 @@ public class SurgeryDataModel {
         }
 
         try {
-            s.start =convertStringToTime(parseElement(elements, 3));
+            s.start = convertStringToTime(parseElement(elements, 3));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -729,7 +739,7 @@ public class SurgeryDataModel {
         }
 
 
-        s.entranceTime =convertStringToTime( parseElement(elements, 35));
+        s.entranceTime = convertStringToTime(parseElement(elements, 35));
 
 
         try {
@@ -747,7 +757,7 @@ public class SurgeryDataModel {
 
 
         try {
-            s.p1PatientRequest =parseElement(elements, 38);
+            s.p1PatientRequest = parseElement(elements, 38);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -795,7 +805,7 @@ public class SurgeryDataModel {
         }
 
         try {
-            s.p7PatientOutOfOp =parseElement(elements, 46);
+            s.p7PatientOutOfOp = parseElement(elements, 46);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -866,6 +876,7 @@ public class SurgeryDataModel {
                 s.terminArtCode = Integer.parseInt(parseElement(elements, 54));
             } else {
                 s.terminArtCode = 0;
+
             }
 
 
@@ -882,8 +893,8 @@ public class SurgeryDataModel {
 
         return s;
 
-
     }
+
 
 
     //--------------------------------------------------------------------------------------------------------------
@@ -917,13 +928,6 @@ public class SurgeryDataModel {
         return true;
     }
 
-
-
-
-
-
-
-
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -946,6 +950,35 @@ public class SurgeryDataModel {
         }
         return formatteddate;
     }
+
+
+
+
+  static  boolean isThisDateValid(String dateToValidate, String dateFromat){
+
+        if(dateToValidate == null){
+            return false;
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFromat);
+        sdf.setLenient(false);
+
+        try {
+
+            //if not valid, it will throw ParseException
+            Date date = sdf.parse(dateToValidate);
+           // System.out.println(date);
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+
 
 
     //------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
