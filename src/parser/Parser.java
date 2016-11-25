@@ -9,10 +9,16 @@ import java.io.File;
 import java.util.ArrayList;
 
 
-/**
- * Created by TheGod on 07.11.16.
- */
+
 public interface Parser {
+
+
+    /**
+     * Decided which parser should be used. Decision depends on the file name
+     *
+     * @param file
+     * @return file to the right parser
+     */
 
     ArrayList<SurgeryDataModel> parse(File file) throws Exception;
 

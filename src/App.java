@@ -2,6 +2,7 @@ import dataModel.SurgeryDataModel;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -9,12 +10,26 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.*;
 import parser.Parser;
-
 import java.awt.*;
 import java.io.*;
 import java.util.*;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.stage.Stage;
 
 public class App extends Application {
+
+    //All variables are global
+
+    GridPane gridPane = new GridPane();
+    MenuBar menuBar = new MenuBar();
+
+    Text scenetitle = new Text("This is a merging Tool");
+
+    FileChooser fileChooser = new FileChooser();
+    FileChooser fileChooser2 = new FileChooser();
+
     File firstFile;
     File secondFile;
     File mergedFile;
@@ -22,28 +37,19 @@ public class App extends Application {
     ArrayList<SurgeryDataModel> surgeries;
     ArrayList<SurgeryDataModel> surgeries2;
 
-
-    Button mergeButton = new Button("die geladenen Dateie mergen..." );
-    Button infoButton = new Button();
-
-
-    Label mergeLabel = new Label("Mergen:");
-
+    Label mergeLabel = new Label("merging:");
     Label amountOfRowsLi = new Label();
     Label amountOfRowsBh = new Label();
-
     Label infoMerge = new Label();
-
     Label getNameFirstFile = new Label();
     Label getNameSecondFile = new Label();
 
-    //Label label = new Label("");
-    Button buttonFirstFile = new Button("eine gültige Datei auswählen...");
 
-    //Label label2 = new Label("Wähle die gewünschte Datei:");
-    Button buttonSecondFile = new Button("eine gültige zweite Datei auswählen...");
-
-    Button run = new Button("die erstellte Datei in Excell öffnen");
+    Button buttonFirstFile = new Button("please load a valid file...");
+    Button buttonSecondFile = new Button("please load another valid file...");
+    Button run = new Button("open the created file in Excel");
+    Button mergeButton = new Button("merge the loaded files..." );
+    Button infoButton = new Button();
 
 
 
@@ -54,203 +60,38 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Stage window = primaryStage;
 
-        GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
-        gridPane.setHgap(10);
-        gridPane.setVgap(8);
-
-
-
-        Text scenetitle = new Text("Dieses Tool merged CSV Dateien");
-        scenetitle.getStyleClass().add("text-welcome");
-        gridPane.add(scenetitle, 0, 0, 2, 1);
-
-
-// Label, Button, FileCHooser für die erste Datei
-
-        FileChooser fileChooser = new FileChooser();
-        fileChooserExtensionFilter(fileChooser);
-
-
-
-        // Info Label
-        //Label ausgewählteDateiLabel = new Label("Die ausgewählte Datei:");
-        //Label ausgewählteDateiLabel2 = new Label("Die ausgewählte Datei:");
-
-// Label, Button, FileCHooser für die zweite Datei
-
-        FileChooser fileChooser2 = new FileChooser();
-        fileChooserExtensionFilter(fileChooser2);
-
-        // Label zeigt FileName an
-
-
-
-        buttonSecondFile.setDisable(true);
-        //label2.setDisable(true);
-
-        mergeLabel.setDisable(true);
-        mergeButton.setDisable(true);
-
-        run.setDisable(true);
-        infoButton.setDisable(true);
-
-
-// ButtonAktivität für die erste Datei
-        buttonFirstFile.setOnAction(e -> {
-            firstFile = fileChooser.showOpenDialog(null);
-            if ((firstFile.getName().contains("Liestal")) || (firstFile.getName().contains("Bruderholz"))){
-
-                try {
-                    countRows(firstFile);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-
-                getNameFirstFile.setText(firstFile.getName());
-
-            Parser parser = null;
-            try {
-                parser = Parser.resolveParser(firstFile);
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-            try {
-                surgeries = parser.parse(firstFile);
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-                enableButton2();
-        }else{
-            getNameFirstFile.setText("Bitte eine gültige Datei auswählen");
-            getNameFirstFile.getStyleClass().add("label-getNameNotification");
-
-
-        }
-
-        });
-
-
-
-//------------------------------------------------------------------------------------------------------------------
-
-        buttonSecondFile.setOnAction(e -> {
-                secondFile = fileChooser2.showOpenDialog(primaryStage);
-
-            if ((secondFile.getName().contains("Liestal"))||(secondFile.getName().contains("Bruderholz"))) {
-                try {
-                    countRows(secondFile);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-
-                getNameSecondFile.setText(secondFile.getName());
-
-                Parser parser2 = null;
-                try {
-                    parser2 = Parser.resolveParser(secondFile);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-                try {
-                    surgeries2 = parser2.parse(secondFile);
-
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-                enableMergeButton();
-                enableInfoButton();
-            }else{
-                getNameSecondFile.setText("eine gültige Datei auswählen");
-                getNameSecondFile.getStyleClass().add("label-getNameNotification");
-
-            }
-        });
-
-
-//------------------------------------------------------------------------------------------------------------------
-        // Button zum Mergen
-        mergeButton.setOnAction(e -> {
-
-
-            Set<SurgeryDataModel> newSet = new HashSet<SurgeryDataModel>(surgeries);
-            newSet.addAll(surgeries2);
-            ArrayList<SurgeryDataModel> newList = new ArrayList<SurgeryDataModel>(newSet);
-
-
-
-
-            FileChooser dc = new FileChooser();
-            fileChooserExtensionFilter(dc);
-            mergedFile = dc.showSaveDialog(primaryStage);
-
-            listInDatei(newList, mergedFile);
-
-            infoMerge.setText("die Datei wurde erfolgreich erstellt");
-            infoMerge.setTextFill(Color.FIREBRICK);
-            enableRun();
-
-        } );
-
-
-
-        run.setOnAction(e -> {
-            run();
-        });
-
-
-
-
-
-        infoButton.setText("Info zu den Dateien");
-        infoButton.setOnAction(e -> {
-            final Stage popUp = new Stage();
-            popUp.initModality(Modality.APPLICATION_MODAL);
-            popUp.initOwner(primaryStage);
-
-            Button close = new Button("dieses Fenster schliessen");
-            close.setOnAction(e1 -> {
-                popUp.close();
-            });
-
-            VBox dialogVbox = new VBox(20);
-            dialogVbox.getChildren().addAll(new Text("Anzahl Zeilen pro Datei:"),amountOfRowsBh,amountOfRowsLi, close);
-            Scene popUpScene = new Scene(dialogVbox, 300, 200);
-            popUpScene.getStylesheets().add("merge.css");
-            popUp.setScene(popUpScene);
-            popUp.show();
-        });
-
+        createGridPane(primaryStage);
+        createMenuBar(primaryStage);
 
 // Zuordnung zum Grid (Node, X-Position, Y-Position)
-        //gridPane.add(label, 0, 1);
-        gridPane.add(buttonFirstFile, 1, 1);
-        //gridPane.add(label2, 0, 3);
-        gridPane.add(buttonSecondFile, 1, 3);
-       // gridPane.add(ausgewählteDateiLabel, 4, 1);
-        gridPane.add(getNameFirstFile, 2, 1);
-        //gridPane.add(ausgewählteDateiLabel2, 4, 3);
-        gridPane.add(getNameSecondFile, 2, 3);
-        gridPane.add(infoButton,1,5);
-       // gridPane.add(amountOfRowsBh,3,5);
-       // gridPane.add(mergeLabel, 0, 6);
-        gridPane.add(mergeButton, 1, 6);
-        gridPane.add(infoMerge, 2, 6);
-        gridPane.add(run, 1, 8);
+
+        gridPane.add(buttonFirstFile, 1, 2);
+        gridPane.add(buttonSecondFile, 1, 4);
+        gridPane.add(getNameFirstFile, 2, 2);
+        gridPane.add(getNameSecondFile, 2, 4);
+        gridPane.add(infoButton,1,6);
+        gridPane.add(mergeButton, 1, 7);
+        gridPane.add(infoMerge, 2, 7);
+        gridPane.add(run, 1, 9);
 
 
 
-
-        window.setScene(new Scene(gridPane, 600, 300));
-        window.setTitle("Merge-Tool");
-        gridPane.getStylesheets().add(("merge.css"));
-        window.show();
+        BorderPane pane = new BorderPane();
+        pane.setLeft(gridPane);
+        pane.setTop(menuBar);
+        primaryStage.setScene(new Scene(pane, 600, 300));
+        primaryStage.setTitle("Merge-Tool");
+        pane.getStylesheets().add(("merge.css"));
+        primaryStage.show();
     }
 
 
-    // liest eine Liste in eine CSV Datei ein und erstellt eine CSV Datei
+
+
+    /**
+     * Creates a csv file with all the values from Arraylists
+     */
     private static void listInDatei(ArrayList<SurgeryDataModel> list, File file) {
         PrintWriter printWriter = null;
         try {
@@ -271,11 +112,6 @@ public class App extends Application {
                     "o8StartOp" + ";" + "o10EndOp" + ";" + "o11End" + ";" + "p7PatientOutOfOp" + ";" +
                     "notFallSpezifikation" + ";" + "terminAbweichung" + ";" + "terminAbweichungVorbereitung" + ";" +
                     "terminAbweichungWiederaufbereitung" + ";" + "terminArtID" + ";" + "terminArtCode" + ";" + "terminID");
-           
-
-
-
-
             while (iter.hasNext()) {
                 Object o = iter.next();
                 printWriter.println(o);
@@ -285,12 +121,16 @@ public class App extends Application {
         } finally {
             try {
                 if (printWriter != null) printWriter.close();
-            } catch (Exception e) {
+            } catch (Exception e) {   e.printStackTrace();
             }
         }
     }
 
-    // FileChooser ExtensionFilter
+
+
+    /**
+     * Extensionfilter for fileChooser
+     */
     public void fileChooserExtensionFilter(FileChooser fileChooser) {
         FileChooser.ExtensionFilter extFilter =
                 new FileChooser.ExtensionFilter("CSV files", "*.csv");
@@ -298,27 +138,41 @@ public class App extends Application {
     }
 
 
-
-
-    public void enableButton2(){
+    /**
+     * Enable the button to load the second file
+     */
+    public void enableButtonSecondfile(){
         buttonSecondFile.setDisable(false);
-        //label2.setDisable(false);
-
     }
+
+
+    /**
+     * Enable the button for merging
+     */
     public void enableMergeButton(){
         mergeButton.setDisable(false);
-       // mergeLabel.setDisable(false);
-
     }
 
+    /**
+     * Enable the info button
+     */
     public void enableInfoButton(){
         infoButton.setDisable(false);
     }
+
+    /**
+     * Enable the Run button
+     */
 
     public void enableRun(){
         run.setDisable(false);
     }
 
+
+    /**
+     * Opens the merged csv file in Excel
+     *
+     */
     public void run(){
         try {
             Desktop.getDesktop().open(mergedFile);
@@ -327,6 +181,12 @@ public class App extends Application {
         }
     }
 
+
+
+    /**
+     * Count the amount of rows in a file
+     *
+     */
     public void countRows(File file) throws  Exception{
         try{
             Scanner scanner = new Scanner((new FileReader(file)));
@@ -348,7 +208,227 @@ public class App extends Application {
     }
 
 
- }
+    /**
+     * creates a menu bar
+     *
+     * @param primaryStage
+     * @return menu bar
+     */
+
+    public MenuBar createMenuBar(Stage primaryStage){
+
+        Menu menu1 = new Menu("Info");
+
+        MenuItem aboutUs = new MenuItem("About us...");
+        aboutUs.setOnAction(e->{
+            double version = 1.0;
+            String text = "This MergeTool were developed and managed by students of FHNW.   Version: " + version;
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, text);
+            alert.setTitle("About us");
+            alert.getDialogPane().setHeaderText(null);
+            alert.showAndWait();
+        });
+
+        MenuItem help = new MenuItem("Help...");
+
+        help.setOnAction(e->{
+            final Stage popUp = new Stage();
+            popUp.initModality(Modality.APPLICATION_MODAL);
+            popUp.initOwner(primaryStage);
+
+            Button openPDF = new Button("open userguideline");
+            File pdfFile = new File("/Users/TheGod/Desktop/Praxisprojekt/src/02_UserGuide.pdf");
+
+            openPDF.setOnAction(e1->{
+                try {
+                    Desktop.getDesktop().open(pdfFile);
+                } catch (IOException e2) {
+                    e2.printStackTrace();
+                }
+
+            });
+
+
+            VBox dialogVbox = new VBox(20);
+            dialogVbox.getChildren().addAll(new Text("This is a Userguideline for the MergeTool"),openPDF);
+            Scene popUpScene = new Scene(dialogVbox, 300, 100);
+            popUpScene.getStylesheets().add("merge.css");
+            popUp.setScene(popUpScene);
+            popUp.show();
+        });
+
+
+
+        menu1.getItems().add(aboutUs);
+        menu1.getItems().add(help);
+        menuBar.getMenus().add(menu1);
+
+
+        menuBar.prefWidthProperty().bind(primaryStage.widthProperty());
+        return menuBar;
+    }
+
+
+
+    /**
+     * creates a grid pane
+     *
+     * @param primaryStage
+     * @return grid pane
+     */
+
+    public GridPane createGridPane(Stage primaryStage){
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setHgap(10);
+        gridPane.setVgap(8);
+
+
+
+        scenetitle.getStyleClass().add("text-welcome");
+        gridPane.add(scenetitle, 0, 1, 2, 1);
+
+
+        fileChooserExtensionFilter(fileChooser);
+        fileChooserExtensionFilter(fileChooser2);
+
+
+        buttonSecondFile.setDisable(true);
+        mergeLabel.setDisable(true);
+        mergeButton.setDisable(true);
+        run.setDisable(true);
+        infoButton.setDisable(true);
+
+
+
+        buttonFirstFile.setOnAction(e -> {
+            firstFile = fileChooser.showOpenDialog(null);
+            if(firstFile == null){
+                getNameFirstFile.setText("no file was loaded, please load a file");
+                getNameFirstFile.getStyleClass().add("label-getNameNotification");
+            }else {
+                if ((firstFile.getName().contains("Liestal")) || (firstFile.getName().contains("Bruderholz"))) {
+
+                    try {
+                        countRows(firstFile);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+
+                    getNameFirstFile.setText(firstFile.getName());
+
+                    Parser parser = null;
+                    try {
+                        parser = Parser.resolveParser(firstFile);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    try {
+
+                        surgeries = parser.parse(firstFile);
+
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    enableButtonSecondfile();
+                } else {
+                    getNameFirstFile.setText("please load a valid file");
+                    getNameFirstFile.getStyleClass().add("label-getNameNotification");
+                }
+            }
+
+        });
+
+
+
+//------------------------------------------------------------------------------------------------------------------
+
+        buttonSecondFile.setOnAction(e -> {
+            secondFile = fileChooser2.showOpenDialog(primaryStage);
+            if(secondFile == null){
+                getNameSecondFile.setText("no file was loaded, please load a file");
+                getNameSecondFile.getStyleClass().add("label-getNameNotification");
+            }else {
+                if ((secondFile.getName().contains("Liestal")) || (secondFile.getName().contains("Bruderholz"))) {
+                    try {
+                        countRows(secondFile);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+
+                    getNameSecondFile.setText(secondFile.getName());
+
+                    Parser parser2 = null;
+                    try {
+                        parser2 = Parser.resolveParser(secondFile);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    try {
+                        assert parser2 != null;
+                        surgeries2 = parser2.parse(secondFile);
+
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    enableMergeButton();
+                    enableInfoButton();
+                } else {
+                    getNameSecondFile.setText("please load a valid file");
+                    getNameSecondFile.getStyleClass().add("label-getNameNotification");
+                }
+            }
+        });
+
+
+//------------------------------------------------------------------------------------------------------------------
+
+        mergeButton.setOnAction(e -> {
+
+
+            Set<SurgeryDataModel> newSet = new HashSet<>(surgeries);
+            newSet.addAll(surgeries2);
+            ArrayList<SurgeryDataModel> newList = new ArrayList<>(newSet);
+
+            FileChooser saveFile = new FileChooser();
+            fileChooserExtensionFilter(saveFile);
+            mergedFile = saveFile.showSaveDialog(primaryStage);
+            if (mergedFile == null) {
+                infoMerge.setText("the file was not created");
+                infoMerge.setTextFill(Color.FIREBRICK);
+            }else {
+
+                listInDatei(newList, mergedFile);
+
+                infoMerge.setText("the file was created successfully");
+                infoMerge.setTextFill(Color.FIREBRICK);
+                enableRun();
+            }
+        } );
+
+        run.setOnAction(e -> run());
+
+        infoButton.setText("Information to the files...");
+        infoButton.setOnAction(e -> {
+            final Stage popUp = new Stage();
+            popUp.initModality(Modality.APPLICATION_MODAL);
+            popUp.initOwner(primaryStage);
+
+            Button close = new Button("close");
+            close.setOnAction(e1 -> popUp.close());
+
+            VBox dialogVbox = new VBox(20);
+            dialogVbox.getChildren().addAll(new Text("number of rows per file: "),amountOfRowsBh,amountOfRowsLi, close);
+            Scene popUpScene = new Scene(dialogVbox, 500, 200);
+            popUpScene.getStylesheets().add("merge.css");
+            popUp.setScene(popUpScene);
+            popUp.show();
+        });
+        return gridPane;
+    }
+
+
+}
 
 
 
@@ -358,4 +438,4 @@ public class App extends Application {
 
 
 
-    
+
